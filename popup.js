@@ -1,13 +1,14 @@
 document.addEventListener("DOMContentLoaded", function(){
     chrome.runtime.sendMessage({text: "Need the time"}, getTime)
-
 });
 
 let displayTimer;
 const startbtn = document.querySelector("#start")
 const timerField = document.querySelector("#timer")
 const pausebtn = document.querySelector("#pause")
+const restartbtn = document.querySelector("#restart")
 
+restartbtn.onclick = resetTimer;
 startbtn.onclick = startCountDown
 pausebtn.onclick = pauseCountDown // still has gitch with pause and close
 
@@ -21,6 +22,10 @@ function getTime(response){
     }
 }
 
+function resetTimer(){
+    chrome.runtime.sendMessage({text: "restart the timer"}, resettingTimer)
+}
+
 function startCountDown(){
     chrome.runtime.sendMessage({text: "start the timer"}, countingDown)
 }
@@ -31,6 +36,11 @@ function pauseCountDown(){
 
 function pauseCount(response){
     clearInterval(displayTimer);
+}
+
+function resettingTimer(response){
+    clearInterval(displayTimer)
+    getTime(response)
 }
 
 function countingDown(response) {
