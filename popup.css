@@ -1,0 +1,11 @@
+body{
+    display: flex;
+    height: 94vh;
+    width: 95vw;
+    justify-content: center;
+    align-items: center;
+}
+h2 {
+    display: flex;
+    justify-content: center;
+}
