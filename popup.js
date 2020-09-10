@@ -1,43 +1,52 @@
-fetch(`http://localhost:3000/timers/5`)
-    .then(response => response.json())
-    .then(timer => { renderCard(timer) })
+document.addEventListener("DOMContentLoaded", function(){
+    chrome.runtime.sendMessage({text: "Need the time"}, getTime)
 
-function renderCard(timer) {
-    const name = document.querySelector("#name")
-    name.textContent = timer.name
-    timerLength = timer.length
-    let h2 = document.querySelector("#timer")
-    h2.textContent = timer.length + ":00"
-    const startbtn = document.querySelector("#start")
-    let minutes = timerLength
-    let secondsRemaining = minutes * 60
-    let displayTimer
-    let myAlarm = new Audio('Fishtank_Bubbles-SoundBibleco-amanda-1550139304.mp3')
+});
 
-    startbtn.addEventListener('click', function() {
-        displayTimer = setInterval(tick, 1000)
-        function tick() {
-            let min = Math.floor(secondsRemaining / 60) 
-            let sec = secondsRemaining - (min * 60)
-            if (sec < 10) {
-                sec = "0" + sec
-            }
-            let timer = min.toString() + ":" + sec
-            h2.textContent = timer
-            if (secondsRemaining === 0){
-                myAlarm.play()
-                alert("Timer is up!")
-                
-                clearInterval(displayTimer)
-            }
-            secondsRemaining--
-        }
-    })
-    const pausebtn = document.querySelector("#pause")
-    pausebtn.addEventListener('click', function() {
-        clearInterval(displayTimer)
-    })
+let displayTimer;
+const startbtn = document.querySelector("#start")
+const timerField = document.querySelector("#timer")
+const pausebtn = document.querySelector("#pause")
+
+startbtn.onclick = startCountDown
+pausebtn.onclick = pauseCountDown
+
+
+function getTime(response){
+    timerField.textContent = response;
 }
 
+function startCountDown(){
+    chrome.runtime.sendMessage({text: "start the timer"}, countingDown)
+}
+
+function pauseCountDown(){
+    chrome.runtime.sendMessage({text: "pause the timer"}, pauseCount)
+}
+
+function pauseCount(response){
+    clearInterval(displayTimer);
+}
+
+function countingDown(response) {
+    let secondsRemaining = response
+    let myAlarm = new Audio('Fishtank_Bubbles-SoundBibleco-amanda-1550139304.mp3')
+    displayTimer = setInterval(tick, 1000);
+        function tick() {
+            let min = Math.floor(secondsRemaining / 60); 
+            let sec = secondsRemaining - (min * 60);
+            if (sec < 10) {
+                sec = "0" + sec;
+            }
+            let timer = min.toString() + ":" + sec;
+            timerField.textContent = timer;
+            if (secondsRemaining === 0){
+                myAlarm.play()
+                alert("Timer is up!");
+                clearInterval(displayTimer);
+            }
+            secondsRemaining--;
+        }
+}
 
 
