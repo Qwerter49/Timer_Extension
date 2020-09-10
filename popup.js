@@ -1,4 +1,4 @@
-fetch(`http://localhost:3000/timers/7`)
+fetch(`http://localhost:3000/timers/5`)
     .then(response => response.json())
     .then(timer => { renderCard(timer) })
 
