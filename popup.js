@@ -1,36 +1,48 @@
-fetch(`http://localhost:3000/timers/5`)
-    .then(response => response.json())
-    .then(timer => { renderCard(timer) })
+document.addEventListener("DOMContentLoaded", function(){
+    chrome.runtime.sendMessage({text: "Need the time"}, getTime)
 
-function renderCard(timer) {
-    const name = document.querySelector("#name")
-    name.textContent = timer.name
-    timerLength = timer.length
-    let h2 = document.querySelector("#timer")
-    h2.textContent = timer.length + ":00"
-    const startbtn = document.querySelector("#start")
-    let minutes = timerLength
-    let secondsRemaining = minutes * 60
-    let displayTimer
-    startbtn.addEventListener('click', function() {
-        displayTimer = setInterval(tick, 1000)
+});
+
+let displayTimer;
+const startbtn = document.querySelector("#start")
+const timerField = document.querySelector("#timer")
+const pausebtn = document.querySelector("#pause")
+
+startbtn.onclick = startCountDown
+pausebtn.onclick = pauseCountDown
+
+
+function getTime(response){
+    timerField.textContent = response;
+}
+
+function startCountDown(){
+    chrome.runtime.sendMessage({text: "start the timer"}, countingDown)
+}
+
+function pauseCountDown(){
+    chrome.runtime.sendMessage({text: "pause the timer"}, pauseCount)
+}
+
+function pauseCount(response){
+    clearInterval(displayTimer);
+}
+
+function countingDown(response) {
+    let secondsRemaining = response
+    displayTimer = setInterval(tick, 1000);
         function tick() {
-            let min = Math.floor(secondsRemaining / 60) 
-            let sec = secondsRemaining - (min * 60)
+            let min = Math.floor(secondsRemaining / 60); 
+            let sec = secondsRemaining - (min * 60);
             if (sec < 10) {
-                sec = "0" + sec
+                sec = "0" + sec;
             }
-            let timer = min.toString() + ":" + sec
-            h2.textContent = timer
+            let timer = min.toString() + ":" + sec;
+            timerField.textContent = timer;
             if (secondsRemaining === 0){
-                alert("Timer is up!")
-                clearInterval(displayTimer)
+                alert("Timer is up!");
+                clearInterval(displayTimer);
             }
-            secondsRemaining--
+            secondsRemaining--;
         }
-    })
-    const pausebtn = document.querySelector("#pause")
-    pausebtn.addEventListener('click', function() {
-        clearInterval(displayTimer)
-    })
 }
