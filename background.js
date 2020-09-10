@@ -1,4 +1,4 @@
-const startingTime = "2:00"
+let startingTime = "5:00"
 let currentTimer = startingTime
 let minutesRemaining = currentTimer.split(":")[0]
 let secondsRemaining = minutesRemaining * 60;

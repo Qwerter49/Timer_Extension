@@ -17,9 +17,6 @@ div.card {
     flex-flow: column;
 
 }
-h1.name {
-    margin: 8px;
-}
 
 h2.timer {
     margin: 10px;
@@ -41,6 +38,40 @@ button {
 }
 
 button:hover {
+    background: #003333;
+    color: #d6f5f5;
+    transition: all 0.5s ease-in-out;
+}
+
+input.up:hover {
+    background: #003333;
+    color: #d6f5f5;
+    transition: all 0.5s ease-in-out;
+}
+
+input.down {
+    background: #d6f5f5;
+    font-family: 'Architects Daughter', cursive;
+    color: #003333;
+    border-radius: 20px;
+    transition: all 0.5s ease-in-out;
+}
+
+input.down:hover {
+    background: #003333;
+    color: #d6f5f5;
+    transition: all 0.5s ease-in-out;
+}
+
+input#submitbtn {
+    background: #d6f5f5;
+    font-family: 'Architects Daughter', cursive;
+    color: #003333;
+    border-radius: 20px;
+    transition: all 0.5s ease-in-out;
+}
+
+input#submitbtn:hover {
     background: #003333;
     color: #d6f5f5;
     transition: all 0.5s ease-in-out;
