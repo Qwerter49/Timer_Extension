@@ -1,11 +1,53 @@
 body{
     display: flex;
-    height: 94vh;
-    width: 95vw;
+    height: 89vh;
+    width: 88vw;
     justify-content: center;
     align-items: center;
+    background: repeating-linear-gradient(#e6ffff, #66b3ff);
+    font-family: 'Architects Daughter', cursive;
+    color: #003333;
+    border: 10px outset #7174c4;
 }
-h2 {
+
+div.card {
     display: flex;
+    align-items: center;
     justify-content: center;
+    flex-flow: column;
+
+}
+h1.name {
+    margin: 8px;
+}
+
+h2.timer {
+    margin: 10px;
+}
+
+div.buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 25px
+}
+
+button {
+    background: #d6f5f5;
+    font-family: 'Architects Daughter', cursive;
+    color: #003333;
+    border-radius: 20px;
+}
+
+button:hover {
+    background: #003333;
+    color: #d6f5f5;
+    transition: all 0.5s ease-in-out;
+}
+
+img {
+    display: flex;
+    height: 130px;
+    width: 130px;
+    padding-top: 17px;
 }
