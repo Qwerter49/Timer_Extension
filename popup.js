@@ -9,11 +9,16 @@ const timerField = document.querySelector("#timer")
 const pausebtn = document.querySelector("#pause")
 
 startbtn.onclick = startCountDown
-pausebtn.onclick = pauseCountDown
+pausebtn.onclick = pauseCountDown // still has gitch with pause and close
 
 
 function getTime(response){
     timerField.textContent = response;
+    if(response.split(":")[1] != 00){
+        minutes =  Number(response.split(":")[0]) * 60
+        seconds = Number(response.split(":")[1]) + minutes
+        countingDown(seconds)
+    }
 }
 
 function startCountDown(){
