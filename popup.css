@@ -51,3 +51,16 @@ img {
     width: 130px;
     padding-top: 17px;
 }
+
+img.rotate {
+    animation: rotate 2s infinite linear;
+}
+
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(359deg);
+    }
+}

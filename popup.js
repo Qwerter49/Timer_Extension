@@ -12,6 +12,8 @@ function renderCard(timer) {
     let minutes = timerLength
     let secondsRemaining = minutes * 60
     let displayTimer
+    let myAlarm = new Audio('Fishtank_Bubbles-SoundBibleco-amanda-1550139304.mp3')
+
     startbtn.addEventListener('click', function() {
         displayTimer = setInterval(tick, 1000)
         function tick() {
@@ -23,7 +25,9 @@ function renderCard(timer) {
             let timer = min.toString() + ":" + sec
             h2.textContent = timer
             if (secondsRemaining === 0){
+                myAlarm.play()
                 alert("Timer is up!")
+                
                 clearInterval(displayTimer)
             }
             secondsRemaining--
@@ -34,3 +38,6 @@ function renderCard(timer) {
         clearInterval(displayTimer)
     })
 }
+
+
+
