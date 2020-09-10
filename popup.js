@@ -35,6 +35,7 @@ function pauseCount(response){
 
 function countingDown(response) {
     let secondsRemaining = response
+    let myAlarm = new Audio('Fishtank_Bubbles-SoundBibleco-amanda-1550139304.mp3')
     displayTimer = setInterval(tick, 1000);
         function tick() {
             let min = Math.floor(secondsRemaining / 60); 
@@ -45,9 +46,12 @@ function countingDown(response) {
             let timer = min.toString() + ":" + sec;
             timerField.textContent = timer;
             if (secondsRemaining === 0){
+                myAlarm.play()
                 alert("Timer is up!");
                 clearInterval(displayTimer);
             }
             secondsRemaining--;
         }
 }
+
+
