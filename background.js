@@ -15,7 +15,6 @@ function sendTimerInfo(request, sender, sendResponse){
         sendResponse(secondsRemaining);
     }
     if (request.text === "are you running?"){
-        console.log(isRunning)
         sendResponse({isRunning, currentTimer});
     }
     if (request.text === "pause the timer"){
@@ -51,7 +50,7 @@ function reloadVariables(sendResponse) {
 }
 
 function countDown() {
-    isRunning = !isRunning
+    isRunning = !isRunning;
     displayTimer = setInterval(tick, 1000);   
 }
 
@@ -68,8 +67,8 @@ const tick = () => {
     if (secondsRemaining === 0){
         isRunning = !isRunning;
         myAlarm.play();
-        alert("Timer is up!");
         clearInterval(displayTimer);
+        setTimeout(alert("Timer is up!"), 200);
     }
     secondsRemaining--;
 }
