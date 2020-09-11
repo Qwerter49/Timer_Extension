@@ -15,7 +15,7 @@ function sendTimerInfo(request, sender, sendResponse){
         sendResponse(secondsRemaining);
     }
     if (request.text === "are you running?"){
-        sendResponse(isRunning);
+        sendResponse({isRunning, currentTimer});
     }
     if (request.text === "pause the timer"){
         isRunning = !isRunning;
@@ -50,11 +50,11 @@ function reloadVariables(sendResponse) {
 }
 
 function countDown() {
+    isRunning = !isRunning;
     displayTimer = setInterval(tick, 1000);   
 }
 
 const tick = () => {
-    isRunning = !isRunning
     let myAlarm = new Audio('Fishtank_Bubbles-SoundBibleco-amanda-1550139304.mp3')
     let min = Math.floor(secondsRemaining / 60); 
     let sec = secondsRemaining - (min * 60);
@@ -65,10 +65,10 @@ const tick = () => {
     currentTimer = timer;
     console.log(timer)
     if (secondsRemaining === 0){
-        isRunning = !isRunning
+        isRunning = !isRunning;
         myAlarm.play();
-        alert("Timer is up!");
         clearInterval(displayTimer);
+        setTimeout(alert("Timer is up!"), 200);
     }
     secondsRemaining--;
 }

@@ -1,7 +1,3 @@
-document.addEventListener("DOMContentLoaded", function(){
-    chrome.runtime.sendMessage({text: "Need the time"}, getTime);
-});
-
 let displayTimer;
 const startbtn = document.querySelector("#start");
 const timerField = document.querySelector("#timer");
@@ -9,18 +5,28 @@ const pausebtn = document.querySelector("#pause");
 const restartbtn = document.querySelector("#restart");
 const upBtn = document.querySelector("#up");
 const downBtn = document.querySelector("#down");
+let isBackgroundRunning = false;
 
 
+upBtn.onclick = increaseTime;
+downBtn.onclick = decreaseTime;
 restartbtn.onclick = resetTimer;
 startbtn.onclick = startCountDown;
 pausebtn.onclick = pauseCountDown;
-upBtn.onclick = increaseTime;
-downBtn.onclick = decreaseTime;
+
+document.addEventListener("DOMContentLoaded", function(){
+    chrome.runtime.sendMessage({text: "Need the time"}, getTime);
+});
 
 function checkIfRunning(response){
-    if(chrome.runtime.sendMessage({text: "are you running?"})){
-        minutes =  Number(response.split(":")[0]) * 60;
-        seconds = Number(response.split(":")[1]) + minutes;
+    chrome.runtime.sendMessage({text: "are you running?"}, setBackgroundRunning);
+}
+
+function setBackgroundRunning({isRunning, currentTimer}){
+    isBackgroundRunning = isRunning;
+    if(isRunning){
+        minutes =  Number(currentTimer.split(":")[0]) * 60;
+        seconds = Number(currentTimer.split(":")[1]) + minutes;
         countingDown(seconds);
     }
 }
@@ -31,11 +37,15 @@ function getTime(response){
 }
 
 function increaseTime(){
-    chrome.runtime.sendMessage({text: "increase the timer"}, getTime);
+    if(!isBackgroundRunning){
+        chrome.runtime.sendMessage({text: "increase the timer"}, getTime);
+    }
 }
 
 function decreaseTime(){
-    chrome.runtime.sendMessage({text: "decrease the timer"}, getTime);
+    if(!isBackgroundRunning){
+        chrome.runtime.sendMessage({text: "decrease the timer"}, getTime);
+    }
 }
 
 function resetTimer(){
@@ -43,10 +53,12 @@ function resetTimer(){
 }
 
 function startCountDown(){
+    isBackgroundRunning = true;
     chrome.runtime.sendMessage({text: "start the timer"}, countingDown);
 }
 
 function pauseCountDown(){
+    isBackgroundRunning = false;
     chrome.runtime.sendMessage({text: "pause the timer"}, pauseCount);
 }
 
@@ -65,12 +77,12 @@ function countingDown(response) {
         function tick() {
             let min = Math.floor(secondsRemaining / 60); 
             let sec = secondsRemaining - (min * 60);
-            if (sec < 10) {
+            if(sec < 10) {
                 sec = "0" + sec;
             }
             let timer = min.toString() + ":" + sec;
             timerField.textContent = timer;
-            if (secondsRemaining === 0){
+            if(secondsRemaining === 0){
                 clearInterval(displayTimer);
                 resetTimer();
             }
