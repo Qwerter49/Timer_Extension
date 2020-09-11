@@ -7,11 +7,11 @@
 > This extention is (or will be soon...) available as a Google chrome extension! <br><br> Once our extension is available we will provide the link here!<br><br> **But in the meantime!** <br><br>You just need to clone down the repo and load unpack the extension in the chrome extensions tab (make sure you have the developer mode enabled!) and boom! It's ready to use! 
 
 ## Screenshots! Gifs!
-![Easy install!](install.png)
-![Starting the timer](open_start_pause.gif)
-![Adjusting time and restart](adjust_time_and_restart.gif)
-![Alert popup](alert.png)
-![Time in use](timer_in_use.png)
+![Easy install!|500x500, 20%](install.png)<br>
+![Starting the timer|500x500, 20%](open_start_pause.gif)<br>
+![Adjusting time and restart|500x500, 20%](adjust_time_and_restart.gif)<br>
+![Alert popup|500x500, 20%](alert.png)<br>
+![Time in use|500x500, 20%](timer_in_use.png)<br>
 
 ## Code Samples
 
