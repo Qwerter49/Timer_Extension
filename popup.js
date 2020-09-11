@@ -9,20 +9,31 @@ const pausebtn = document.querySelector("#pause");
 const restartbtn = document.querySelector("#restart");
 const upBtn = document.querySelector("#up");
 const downBtn = document.querySelector("#down");
+let isBackgroundRunning = false;
 
-
+if(isBackgroundRunning == false){
+    upBtn.onclick = increaseTime;
+    downBtn.onclick = decreaseTime;
+}
 restartbtn.onclick = resetTimer;
 startbtn.onclick = startCountDown;
 pausebtn.onclick = pauseCountDown;
-upBtn.onclick = increaseTime;
-downBtn.onclick = decreaseTime;
 
-function checkIfRunning(response){
-    if(chrome.runtime.sendMessage({text: "are you running?"})){
+
+async function checkIfRunning(response){
+    await chrome.runtime.sendMessage({text: "are you running?"}, await setBackgroundRunning)
+    console.log(isBackgroundRunning)
+    if(isBackgroundRunning){
+        chrome.runtime.sendMessage({text: "hello background"}, response => console.log(response))
         minutes =  Number(response.split(":")[0]) * 60;
         seconds = Number(response.split(":")[1]) + minutes;
         countingDown(seconds);
     }
+}
+
+async function setBackgroundRunning(response){
+    isBackgroundRunning = await response
+    console.log(response)
 }
 
 function getTime(response){
@@ -43,6 +54,7 @@ function resetTimer(){
 }
 
 function startCountDown(){
+    isBackgroundRunning = true
     chrome.runtime.sendMessage({text: "start the timer"}, countingDown);
 }
 
@@ -70,6 +82,7 @@ function countingDown(response) {
             }
             let timer = min.toString() + ":" + sec;
             timerField.textContent = timer;
+            console.log(isBackgroundRunning)
             if (secondsRemaining === 0){
                 clearInterval(displayTimer);
                 resetTimer();
