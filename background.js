@@ -14,12 +14,9 @@ function sendTimerInfo(request, sender, sendResponse){
         countDown();
         sendResponse(secondsRemaining);
     }
-    if (request.text === "hello background"){
-        console.log("It worked")
-    }
     if (request.text === "are you running?"){
         console.log(isRunning)
-        sendResponse(isRunning);
+        sendResponse({isRunning, currentTimer});
     }
     if (request.text === "pause the timer"){
         isRunning = !isRunning;

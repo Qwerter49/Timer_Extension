@@ -20,20 +20,17 @@ startbtn.onclick = startCountDown;
 pausebtn.onclick = pauseCountDown;
 
 
-async function checkIfRunning(response){
-    await chrome.runtime.sendMessage({text: "are you running?"}, await setBackgroundRunning)
-    console.log(isBackgroundRunning)
-    if(isBackgroundRunning){
-        chrome.runtime.sendMessage({text: "hello background"}, response => console.log(response))
-        minutes =  Number(response.split(":")[0]) * 60;
-        seconds = Number(response.split(":")[1]) + minutes;
-        countingDown(seconds);
-    }
+function checkIfRunning(response){
+    chrome.runtime.sendMessage({text: "are you running?"}, setBackgroundRunning)
 }
 
-async function setBackgroundRunning(response){
-    isBackgroundRunning = await response
-    console.log(response)
+function setBackgroundRunning({isRunning, currentTimer}){
+    isBackgroundRunning = isRunning
+    if(isRunning){
+        minutes =  Number(currentTimer.split(":")[0]) * 60;
+        seconds = Number(currentTimer.split(":")[1]) + minutes;
+        countingDown(seconds);
+    }
 }
 
 function getTime(response){
