@@ -14,6 +14,8 @@
 ![Time in use|500x500, 20%](timer_in_use.png)<br>
 
 ## Code Samples
+
+> Our Javascript timer ticker 
 ```Javascript
 const tick = () => {
     let myAlarm = new Audio('Fishtank_Bubbles-SoundBibleco-amanda-1550139304.mp3')
@@ -32,6 +34,13 @@ const tick = () => {
         setTimeout(alert("Timer is up!"), 200);
     }
     secondsRemaining--;
+}
+```
+
+We also used googles Messages API to communicate with our background.js
+```javascript
+function checkIfRunning(response){
+    chrome.runtime.sendMessage({text: "are you running?"}, setBackgroundRunning);
 }
 ```
 
