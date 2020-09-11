@@ -7,6 +7,7 @@ function countDown() {
     displayTimer = setInterval(tick, 1000);   
 }
 const tick = () => {
+    let myAlarm = new Audio('Fishtank_Bubbles-SoundBibleco-amanda-1550139304.mp3')
     let min = Math.floor(secondsRemaining / 60); 
     let sec = secondsRemaining - (min * 60);
     if (sec < 10) {
@@ -16,6 +17,8 @@ const tick = () => {
     currentTimer = timer;
     console.log(currentTimer)
     if (secondsRemaining === 0){
+        myAlarm.play()
+        alert("Timer is up!");
         clearInterval(displayTimer);
     }
     secondsRemaining--;
