@@ -7,10 +7,16 @@ const startbtn = document.querySelector("#start")
 const timerField = document.querySelector("#timer")
 const pausebtn = document.querySelector("#pause")
 const restartbtn = document.querySelector("#restart")
+const upBtn = document.querySelector("#up")
+const downBtn = document.querySelector("#down")
+
 
 restartbtn.onclick = resetTimer;
 startbtn.onclick = startCountDown
 pausebtn.onclick = pauseCountDown // still has gitch with pause and close
+upBtn.onclick = increaseTime
+downBtn.onclick = decreaseTime
+
 
 
 function getTime(response){
@@ -20,6 +26,14 @@ function getTime(response){
         seconds = Number(response.split(":")[1]) + minutes
         countingDown(seconds)
     }
+}
+
+function increaseTime(){
+    chrome.runtime.sendMessage({text: "increase the timer"}, getTime)
+}
+
+function decreaseTime(){
+    chrome.runtime.sendMessage({text: "decrease the timer"}, getTime)
 }
 
 function resetTimer(){

@@ -42,4 +42,18 @@ function sendTimerInfo(request, sender, sendResponse){
         secondsRemaining = minutesRemaining * 60;
         sendResponse(currentTimer)
     }
+    if (request.text === "increase the timer") {
+        let startingMinutes = Number(startingTime.split(":")[0])
+        startingMinutes += 1 
+        startingTime = startingMinutes.toString() + ":00"
+        currentTimer = startingTime
+        sendResponse(currentTimer)
+    }
+    if (request.text === "decrease the timer") {
+        let startingMinutes = Number(startingTime.split(":")[0])
+        startingMinutes -= 1 
+        startingTime = startingMinutes.toString() + ":00"
+        currentTimer = startingTime
+        sendResponse(currentTimer)
+    }
 }
