@@ -1,51 +1,53 @@
 document.addEventListener("DOMContentLoaded", function(){
-    chrome.runtime.sendMessage({text: "Need the time"}, getTime)
+    chrome.runtime.sendMessage({text: "Need the time"}, getTime);
 });
 
 let displayTimer;
-const startbtn = document.querySelector("#start")
-const timerField = document.querySelector("#timer")
-const pausebtn = document.querySelector("#pause")
-const restartbtn = document.querySelector("#restart")
-const upBtn = document.querySelector("#up")
-const downBtn = document.querySelector("#down")
+const startbtn = document.querySelector("#start");
+const timerField = document.querySelector("#timer");
+const pausebtn = document.querySelector("#pause");
+const restartbtn = document.querySelector("#restart");
+const upBtn = document.querySelector("#up");
+const downBtn = document.querySelector("#down");
 
 
 restartbtn.onclick = resetTimer;
-startbtn.onclick = startCountDown
-pausebtn.onclick = pauseCountDown // still has gitch with pause and close
-upBtn.onclick = increaseTime
-downBtn.onclick = decreaseTime
+startbtn.onclick = startCountDown;
+pausebtn.onclick = pauseCountDown;
+upBtn.onclick = increaseTime;
+downBtn.onclick = decreaseTime;
 
-
-
-function getTime(response){
-    timerField.textContent = response;
-    if(response.split(":")[1] != 00){
-        minutes =  Number(response.split(":")[0]) * 60
-        seconds = Number(response.split(":")[1]) + minutes
-        countingDown(seconds)
+function checkIfRunning(response){
+    if(chrome.runtime.sendMessage({text: "are you running?"})){
+        minutes =  Number(response.split(":")[0]) * 60;
+        seconds = Number(response.split(":")[1]) + minutes;
+        countingDown(seconds);
     }
 }
 
+function getTime(response){
+    checkIfRunning(response);
+    timerField.textContent = response;
+}
+
 function increaseTime(){
-    chrome.runtime.sendMessage({text: "increase the timer"}, getTime)
+    chrome.runtime.sendMessage({text: "increase the timer"}, getTime);
 }
 
 function decreaseTime(){
-    chrome.runtime.sendMessage({text: "decrease the timer"}, getTime)
+    chrome.runtime.sendMessage({text: "decrease the timer"}, getTime);
 }
 
 function resetTimer(){
-    chrome.runtime.sendMessage({text: "restart the timer"}, resettingTimer)
+    chrome.runtime.sendMessage({text: "restart the timer"}, resettingTimer);
 }
 
 function startCountDown(){
-    chrome.runtime.sendMessage({text: "start the timer"}, countingDown)
+    chrome.runtime.sendMessage({text: "start the timer"}, countingDown);
 }
 
 function pauseCountDown(){
-    chrome.runtime.sendMessage({text: "pause the timer"}, pauseCount)
+    chrome.runtime.sendMessage({text: "pause the timer"}, pauseCount);
 }
 
 function pauseCount(response){
@@ -53,13 +55,12 @@ function pauseCount(response){
 }
 
 function resettingTimer(response){
-    clearInterval(displayTimer)
-    getTime(response)
+    clearInterval(displayTimer);
+    getTime(response);
 }
 
 function countingDown(response) {
-    let secondsRemaining = response
-    let myAlarm = new Audio('Fishtank_Bubbles-SoundBibleco-amanda-1550139304.mp3')
+    let secondsRemaining = response;
     displayTimer = setInterval(tick, 1000);
         function tick() {
             let min = Math.floor(secondsRemaining / 60); 
@@ -70,9 +71,8 @@ function countingDown(response) {
             let timer = min.toString() + ":" + sec;
             timerField.textContent = timer;
             if (secondsRemaining === 0){
-                myAlarm.play()
-                alert("Timer is up!");
                 clearInterval(displayTimer);
+                resetTimer();
             }
             secondsRemaining--;
         }
