@@ -21,7 +21,7 @@ function checkIfRunning(response){
     if(chrome.runtime.sendMessage({text: "are you running?"})){
         minutes =  Number(response.split(":")[0]) * 60;
         seconds = Number(response.split(":")[1]) + minutes;
-        countingDown(seconds)
+        countingDown(seconds);
     }
 }
 
@@ -72,6 +72,7 @@ function countingDown(response) {
             timerField.textContent = timer;
             if (secondsRemaining === 0){
                 clearInterval(displayTimer);
+                resetTimer();
             }
             secondsRemaining--;
         }

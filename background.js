@@ -18,13 +18,12 @@ function sendTimerInfo(request, sender, sendResponse){
         sendResponse(isRunning);
     }
     if (request.text === "pause the timer"){
-        isRunning = !isRunning
+        isRunning = !isRunning;
         clearInterval(displayTimer);
-        console.log(displayTimer)
         sendResponse("Timer has paused");
     }
     if (request.text === "restart the timer"){
-        isRunning = !isRunning
+        isRunning = !isRunning;
         clearInterval(displayTimer);
         reloadVariables(sendResponse);
     }
@@ -64,6 +63,7 @@ const tick = () => {
     }
     let timer = min.toString() + ":" + sec;
     currentTimer = timer;
+    console.log(timer)
     if (secondsRemaining === 0){
         isRunning = !isRunning
         myAlarm.play();
