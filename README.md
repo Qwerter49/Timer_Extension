@@ -37,7 +37,7 @@ const tick = () => {
 }
 ```
 
-We also used googles Messages API to communicate with our background.js
+We also used googles [Messages API](https://developer.chrome.com/extensions/messaging) to communicate with our background.js
 ```javascript
 function checkIfRunning(response){
     chrome.runtime.sendMessage({text: "are you running?"}, setBackgroundRunning);
