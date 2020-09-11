@@ -11,10 +11,9 @@ const upBtn = document.querySelector("#up");
 const downBtn = document.querySelector("#down");
 let isBackgroundRunning = false;
 
-if(isBackgroundRunning == false){
-    upBtn.onclick = increaseTime;
-    downBtn.onclick = decreaseTime;
-}
+
+upBtn.onclick = increaseTime;
+downBtn.onclick = decreaseTime;
 restartbtn.onclick = resetTimer;
 startbtn.onclick = startCountDown;
 pausebtn.onclick = pauseCountDown;
@@ -39,11 +38,15 @@ function getTime(response){
 }
 
 function increaseTime(){
-    chrome.runtime.sendMessage({text: "increase the timer"}, getTime);
+    if(!isBackgroundRunning){
+        chrome.runtime.sendMessage({text: "increase the timer"}, getTime);
+    }
 }
 
 function decreaseTime(){
-    chrome.runtime.sendMessage({text: "decrease the timer"}, getTime);
+    if(!isBackgroundRunning){
+        chrome.runtime.sendMessage({text: "decrease the timer"}, getTime);
+    }
 }
 
 function resetTimer(){
@@ -56,6 +59,7 @@ function startCountDown(){
 }
 
 function pauseCountDown(){
+    isBackgroundRunning = false
     chrome.runtime.sendMessage({text: "pause the timer"}, pauseCount);
 }
 
