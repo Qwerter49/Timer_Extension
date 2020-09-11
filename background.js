@@ -47,6 +47,8 @@ function sendTimerInfo(request, sender, sendResponse){
         startingMinutes += 1 
         startingTime = startingMinutes.toString() + ":00"
         currentTimer = startingTime
+        minutesRemaining = currentTimer.split(":")[0]
+        secondsRemaining = minutesRemaining * 60;
         sendResponse(currentTimer)
     }
     if (request.text === "decrease the timer") {
@@ -54,6 +56,8 @@ function sendTimerInfo(request, sender, sendResponse){
         startingMinutes -= 1 
         startingTime = startingMinutes.toString() + ":00"
         currentTimer = startingTime
+        minutesRemaining = currentTimer.split(":")[0]
+        secondsRemaining = minutesRemaining * 60;
         sendResponse(currentTimer)
     }
 }
