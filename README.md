@@ -14,7 +14,26 @@
 ![Time in use|500x500, 20%](timer_in_use.png)<br>
 
 ## Code Samples
-
+```Javascript
+const tick = () => {
+    let myAlarm = new Audio('Fishtank_Bubbles-SoundBibleco-amanda-1550139304.mp3')
+    let min = Math.floor(secondsRemaining / 60); 
+    let sec = secondsRemaining - (min * 60);
+    if (sec < 10) {
+        sec = "0" + sec;
+    }
+    let timer = min.toString() + ":" + sec;
+    currentTimer = timer;
+    console.log(timer)
+    if (secondsRemaining === 0){
+        isRunning = !isRunning;
+        myAlarm.play();
+        clearInterval(displayTimer);
+        setTimeout(alert("Timer is up!"), 200);
+    }
+    secondsRemaining--;
+}
+```
 
 ## Tech-y stuff!
 * HTML
